@@ -75,6 +75,13 @@ async function getAllMyPosts(id) {
     return Post.find({ author: id }).collation({ locale: 'en', strength: 2 }).lean();
 }
 
+async function getUserName(id) {
+    const user = await User.findById(id).collation({ locale: 'en', strength: 2 }).lean();
+    const fullName = user.firstName + ' ' + user.lastName;
+   
+    return fullName;
+}
+
 module.exports = {
     register,
     login,
