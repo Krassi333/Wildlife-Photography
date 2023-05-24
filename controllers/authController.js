@@ -1,3 +1,14 @@
+const { register, login } = require('../services/userServices');
+const errorParser = require('../util/errorParser');
+
+const router = require('express').Router();
+
+router.get('/register', (req, res) => {
+    res.render('register', {
+        title: "Register Page"
+    });
+});
+
 router.post('/register', async (req, res) => {
     //console.log(req.body);
 
@@ -48,3 +59,4 @@ router.get('/logout', (req, res) => {
     res.redirect('/');
 })
 
+module.exports = router;
