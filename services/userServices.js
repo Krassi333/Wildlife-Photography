@@ -71,6 +71,10 @@ async function getUserEmail(id) {
     return user.email;
 };
 
+async function getAllMyPosts(id) {
+    return Post.find({ author: id }).collation({ locale: 'en', strength: 2 }).lean();
+}
+
 module.exports = {
     register,
     login,
