@@ -28,6 +28,27 @@ async function register(data) {
 
 };
 
+async function login(email, password, req) {
+    if (email == '' || password == '') {
+        throw new Error('All fields are required!');
+    }
+
+    const user = await User.findOne({ email }).collation({ locale: 'en', strength: 2 });
+
+    if (!user) {
+        throw new Error('Invalid email or password!');
+    }
+
+    const passCheck = await bcrypt.compare(password, user.password);
+
+    if (!passCheck) {
+        throw new Error('Invalid email or password!');
+    }
+
+    const token = createToken(user);
+    return token;
+}
+
 module.exports = {
     register,
     login,
