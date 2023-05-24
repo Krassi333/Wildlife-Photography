@@ -49,6 +49,13 @@ async function login(email, password, req) {
     return token;
 }
 
+function createToken(user) {
+    const payload = {
+        _id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email
+    }
 module.exports = {
     register,
     login,
