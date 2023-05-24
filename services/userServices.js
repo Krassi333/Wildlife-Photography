@@ -56,6 +56,15 @@ function createToken(user) {
         lastName: user.lastName,
         email: user.email
     }
+
+    const token = jwt.sign(payload, secret);
+    return token;
+};
+
+function verifyToken(token) {
+    return jwt.verify(token, secret);
+}
+
 module.exports = {
     register,
     login,
