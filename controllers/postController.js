@@ -84,4 +84,18 @@ router.get('/:id/details', async (req, res) => {
     })
 });
 
+router.get('/:id/delete', async (req, res) => {
+    await deletePost(req.params.id);
+    res.redirect('/post/catalog');
+});
+
+router.get('/:id/edit', async (req, res) => {
+    const post = await getById(req.params.id);
+
+    res.render('edit', {
+        title: 'Edit Page',
+        post
+    });
+});
+
 module.exports = router;
