@@ -116,4 +116,15 @@ router.post('/:id/edit', async (req, res) => {
     }
 });
 
+router.get('/:id/voteUp', async (req, res) => {
+    await vote(req.params.id, req.user._id, 'up');
+    res.redirect(`/post/${req.params.id}/details`);
+});
+
+router.get('/:id/voteDown', async (req, res) => {
+    await vote(req.params.id, req.user._id, 'down');
+    res.redirect(`/post/${req.params.id}/details`);
+
+})
+
 module.exports = router;
