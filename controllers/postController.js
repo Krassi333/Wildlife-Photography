@@ -12,4 +12,10 @@ router.get('/catalog', async (req, res) => {
     });
 });
 
+router.get('/create', (req, res) => {
+    res.render('create', {
+        title: 'Add Post'
+    });
+});
+
 module.exports = router;
