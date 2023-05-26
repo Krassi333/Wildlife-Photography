@@ -98,4 +98,22 @@ router.get('/:id/edit', async (req, res) => {
     });
 });
 
+router.post('/:id/edit', async (req, res) => {
+
+    const newData = req.body;
+
+    try {
+        await editPost(req.params.id, newData);
+        res.redirect(`/post/${req.params.id}/details`);
+    } catch (err) {
+        const errors = errorParser(err);
+
+        res.render('edit', {
+            title: 'Edit Page',
+            post,
+            errors
+        });
+    }
+});
+
 module.exports = router;
