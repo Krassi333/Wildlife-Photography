@@ -45,4 +45,43 @@ router.post('/create', async (req, res) => {
     }
 });
 
+router.get('/:id/details', async (req, res) => {
+    const post = await getById(req.params.id);
+    const user = req.cookies.token;
+
+    const author = await getPostAuthor(post.author);
+    post.authorName = `${author.firstName} ${author.lastName}`;
+
+    if (post.votes.length > 0) {
+
+        let voteUsers = [];
+
+        for (let el of post.votes) {
+            const email = await getUserEmail(el);
+            voteUsers.push(email);
+        }
+        
+        post.listOfVoteUser = voteUsers.join(', ');
+
+        if (post.votes.map(v => v.toString()).includes(req.user._id.toString())) {
+            post.alreadyVote = true;
+        }  
+    }
+
+
+    if (user) {
+        post.hasUser = true;
+
+        if (req.user._id.toString() == post.author.toString()) {
+            post.isAuthor = true;
+        }
+    }
+
+    res.render('details', {
+        title: 'Details Page',
+        post,
+        user
+    })
+});
+
 module.exports = router;
