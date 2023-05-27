@@ -22,6 +22,19 @@ async function deletePost(id) {
     return Post.findByIdAndDelete(id);
 };
 
+async function editPost(id, data) {
+    let post = await Post.findById(id).collation({ locale: 'en', strength: 2 });
+
+    post.title = data.title;
+    post.keyword = data.keyword;
+    post.location = data.location;
+    post.createdAt = data.createdAt;
+    post.image = data.image;
+    post.description = data.description;
+
+    return post.save();
+}
+
 module.exports = {
     getAllPosts,
     createPost,
