@@ -35,6 +35,20 @@ async function editPost(id, data) {
     return post.save();
 }
 
+async function vote(id, user, voteRezult) {
+    const post = await Post.findById(id);
+    post.votes.push(user);
+
+    if (voteRezult == 'up') {
+        post.rating++;
+    } else {
+        post.rating--;
+    }
+
+    return post.save();
+
+}
+
 module.exports = {
     getAllPosts,
     createPost,
